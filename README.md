@@ -4,6 +4,8 @@ eventful-api-coldfusion
 OAuth Eventful API Wrapper by Brian Ghidinelli, 2014
 http://www.ghidinelli.com  / http://github.com/ghidinelli
 
+Requires a copy of my RestConsumer CFC to handle low-level HTTP requests: https://github.com/ghidinelli/restconsumer
+
 To access the Eventful API using Oauth, you must:
 	
 1. Create an account on Eventful.com
@@ -17,7 +19,7 @@ To access the Eventful API using Oauth, you must:
    If you will be accessing Eventful on behalf of your server/application, you must perform the above Oauth flow ONCE for your system.
    In this case, when you are redirected to Eventful.com's authorization_url, you will authorize with your own account
    and permanently store the resulting Access token and Access secret.
-4) Make authenticated API requests using the Access token and secret acting on-behalf-of that authorized user.
+1. Make authenticated API requests using the Access token and secret acting on-behalf-of that authorized user.
 
 Switched from the XML endpoint to JSON per my preference.
 
