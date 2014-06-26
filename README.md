@@ -1,27 +1,27 @@
 eventful-api-coldfusion
 =======================
 
-API wrapper for the OAuth Eventful.com API
+OAuth Eventful API Wrapper by Brian Ghidinelli, 2014
+http://www.ghidinelli.com  / http://github.com/ghidinelli
 
 To access the Eventful API using Oauth, you must:
 	
-1) Create an account on Eventful.com
-2) Go to api.eventful.com and obtain an API app key
-3) If you will be accessing Eventful on behalf of individual users, you must perform the Oauth flow for each user.  
-   That means: a) calling getOauthRequestToken()
-   			   b) redirecting the user to the authorization_url, let them authorize you, receive the redirect back and then
-   			   C) use getOauthAccessToken() to exchange the temporary token for a permanent Access token
+1. Create an account on Eventful.com
+1. Go to api.eventful.com and obtain an API app key
+1. If you will be accessing Eventful on behalf of individual users, you must perform the Oauth flow for each user.  
+   That means: 
+  * calling getOauthRequestToken()
+  * redirecting the user to the authorization_url, let them authorize you, receive the redirect back and then
+  * use getOauthAccessToken() to exchange the temporary token for a permanent Access token
 
    If you will be accessing Eventful on behalf of your server/application, you must perform the above Oauth flow ONCE for your system.
    In this case, when you are redirected to Eventful.com's authorization_url, you will authorize with your own account
    and permanently store the resulting Access token and Access secret.
 4) Make authenticated API requests using the Access token and secret acting on-behalf-of that authorized user.
 
-Switched from XML to JSON.
-	
-	
-OAuth Eventful API Wrapper by Brian Ghidinelli, 2014
-http://www.ghidinelli.com  / http://github.com/ghidinelli
+Switched from the XML endpoint to JSON per my preference.
+
+
 Many thanks to David Reiter @ Eventful for troubleshooting support (dreiter@eventful-inc.com)
 
 -----------------------------------------------------------------------
