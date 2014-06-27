@@ -75,17 +75,17 @@
 
 	
 	<cffunction name="EventsSearch" access="public" displayname="Searches Eventful events">
-		<cfargument name="keywords" required="false" type="string" default="">
-		<cfargument name="location" required="false" type="string" default="">
-		<cfargument name="date" required="false" type="string" default="">
-		<cfargument name="category" required="false" type="string" default="">
-		<cfargument name="within" required="false" type="numeric" default="0">
-		<cfargument name="units" required="false" type="string" default="">
-		<cfargument name="count_only" required="false" type="Boolean" default="False">
-		<cfargument name="sort_order" required="false" type="string" default="Date" hint="One of 'popularity', 'date', or 'relevance'. Default is 'relevance'.">
-		<cfargument name="sort_direction" required="false" type="string" default="">
-		<cfargument name="page_size" required="false" type="numeric" default="0">
-		<cfargument name="page_number" required="false" type="numeric" default="0">
+		<cfargument name="keywords" required="false" type="string" default="" />
+		<cfargument name="location" required="false" type="string" default="" />
+		<cfargument name="date" required="false" type="string" default="" />
+		<cfargument name="category" required="false" type="string" default="" />
+		<cfargument name="within" required="false" type="numeric" default="0" />
+		<cfargument name="units" required="false" type="string" default="" />
+		<cfargument name="count_only" required="false" type="Boolean" default="False" />
+		<cfargument name="sort_order" required="false" type="string" default="Date" hint="One of 'popularity', 'date', or 'relevance'. Default is 'relevance'." />
+		<cfargument name="sort_direction" required="false" type="string" default="" />
+		<cfargument name="page_size" required="false" type="numeric" default="0" />
+		<cfargument name="page_number" required="false" type="numeric" default="0" />
 		
 		<cfset var resource = "/events/search" />
 		<cfset var params = {} />
@@ -142,22 +142,21 @@
 
 	
 	<cffunction name="EventsNew" access="public" displayname="Creates an eventful event">
-		<cfargument name="title" required="true" type="string" default="">
-		<cfargument name="start_time" required="true" type="string" default="" hint="Example: 2005-07-04+17:00:00 = July 4th, 2007 5:00 PM">
-		<cfargument name="stop_time" required="false" type="string" default="">
-		<cfargument name="tz_olson_path" required="false" type="string" default="">
-		<cfargument name="all_day" required="false" type="Numeric" default="0" hint="1 (True) or 0 (False)">
-		<cfargument name="description" required="false" type="string" default="">
-		<cfargument name="privacy" required="false" type="numeric" default="1" hint="1 = public, 2 = private, 3 = semi-private">
-		<cfargument name="tags" required="false" type="string" default="">
-		<cfargument name="free" required="false" type="Numeric" default="0" hint="1 (True) or 0 (False)">
-		<cfargument name="price" required="false" type="string" default="">
-		<cfargument name="venue_id" required="false" type="string" default="">
-		<cfargument name="parent_id" required="false" type="string" default="">
+		<cfargument name="title" required="true" type="string" default="" />
+		<cfargument name="start_time" required="true" type="string" default="" hint="Example: 2005-07-04+17:00:00 = July 4th, 2007 5:00 PM" />
+		<cfargument name="stop_time" required="false" type="string" default="" />
+		<cfargument name="tz_olson_path" required="false" type="string" default="" />
+		<cfargument name="all_day" required="false" type="Numeric" default="0" hint="1 (True) or 0 (False)" />
+		<cfargument name="description" required="false" type="string" default="" />
+		<cfargument name="privacy" required="false" type="numeric" default="1" hint="1 = public, 2 = private, 3 = semi-private" />
+		<cfargument name="tags" required="false" type="string" default="" />
+		<cfargument name="free" required="false" type="Numeric" default="0" hint="1 (True) or 0 (False)" />
+		<cfargument name="price" required="false" type="string" default="" />
+		<cfargument name="venue_id" required="false" type="string" default="" />
+		<cfargument name="parent_id" required="false" type="string" default="" />
 		
-		<cfset var resource = "/events/new"  />
+		<cfset var resource = "/events/new" />
 		<cfset var params = {} />
-		
 		
 		<cfscript>
 			if(len(arguments.title)) {
@@ -207,8 +206,6 @@
 			if(len(arguments.parent_id)) {
 				structInsert(params, "parent_id", arguments.parent_id);
 			}
-			
-
 		</cfscript>
 		
 		<cfreturn doRemoteCall(resource = resource, payload = params) />	
@@ -216,23 +213,22 @@
 
 	
 	<cffunction name="EventsModify" access="public" displayname="Modifies an eventful event">
-		<cfargument name="id" required="true" type="string" default="">
-		<cfargument name="title" required="false" type="string" default="">
-		<cfargument name="start_time" required="false" type="string" default="" hint="Example: 2005-07-04+17:00:00 = July 4th, 2007 5:00 PM">
-		<cfargument name="stop_time" required="false" type="string" default="">
-		<cfargument name="tz_olson_path" required="false" type="string" default="">
-		<cfargument name="all_day" required="false" type="Numeric" default="0" hint="1 (True) or 0 (False)">
-		<cfargument name="description" required="false" type="string" default="">
-		<cfargument name="privacy" required="false" type="numeric" default="1" hint="1 = public, 2 = private, 3 = semi-private">
-		<cfargument name="tags" required="false" type="string" default="">
-		<cfargument name="free" required="false" type="Numeric" default="0" hint="1 (True) or 0 (False)">
-		<cfargument name="price" required="false" type="string" default="">
-		<cfargument name="venue_id" required="false" type="string" default="">
-		<cfargument name="parent_id" required="false" type="string" default="">
+		<cfargument name="id" required="true" type="string" default="" />
+		<cfargument name="title" required="false" type="string" default="" />
+		<cfargument name="start_time" required="false" type="string" default="" hint="Example: 2005-07-04+17:00:00 = July 4th, 2007 5:00 PM" />
+		<cfargument name="stop_time" required="false" type="string" default="" />
+		<cfargument name="tz_olson_path" required="false" type="string" default="" />
+		<cfargument name="all_day" required="false" type="Numeric" default="0" hint="1 (True) or 0 (False)" />
+		<cfargument name="description" required="false" type="string" default="" />
+		<cfargument name="privacy" required="false" type="numeric" default="1" hint="1 = public, 2 = private, 3 = semi-private" />
+		<cfargument name="tags" required="false" type="string" default="" />
+		<cfargument name="free" required="false" type="Numeric" default="0" hint="1 (True) or 0 (False)" />
+		<cfargument name="price" required="false" type="string" default="" />
+		<cfargument name="venue_id" required="false" type="string" default="" />
+		<cfargument name="parent_id" required="false" type="string" default="" />
 		
-		<cfset var resource = "/events/modify"  />
+		<cfset var resource = "/events/modify" />
 		<cfset var params = {} />
-		
 		
 		<cfscript>
 			if(len(arguments.id)) {
@@ -286,7 +282,6 @@
 			if(len(arguments.parent_id)) {
 				structInsert(params, "parent_id", arguments.parent_id);
 			}
-			
 		</cfscript>
 		
 		<cfreturn doRemoteCall(resource = resource, payload = params) />	
@@ -294,30 +289,27 @@
 
 	
 	<cffunction name="EventsGet" access="public" displayname="Gets an eventful event">
-		<cfargument name="id" required="true" type="string" default="">
+		<cfargument name="id" required="true" type="string" default="" />
 		
-		<cfset var resource = "/events/get"  />
+		<cfset var resource = "/events/get" />
 		<cfset var params = {} />
-		
 		
 		<cfscript>
 			if(len(arguments.id)) {
 				structInsert(params, "id", arguments.id);
 			}
-			
 		</cfscript>
 		
 		<cfreturn doRemoteCall(resource = resource, payload = params) />
 	</cffunction>
-	
+
 	
 	<cffunction name="EventsWithdraw" access="public" displayname="Withdraws/Deletes an eventful event">
-		<cfargument name="id" required="true" type="string" default="">
-		<cfargument name="note" required="false" type="string" default="">
+		<cfargument name="id" required="true" type="string" default="" />
+		<cfargument name="note" required="false" type="string" default="" />
 		
-		<cfset var resource = "/events/withdraw"  />
+		<cfset var resource = "/events/withdraw" />
 		<cfset var params = {} />
-		
 		
 		<cfscript>
 			if(len(arguments.id)) {
@@ -326,31 +318,209 @@
 			
 			if(len(arguments.note)) {
 				structInsert(params, "note", arguments.note);
+			}	
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
+	
+
+	<cffunction name="EventsRestore" access="public" displayname="Restore a withdrawn/deleted event">
+		<cfargument name="id" required="true" type="string" />
+		
+		<cfset var resource = "/events/restore" />
+		<cfset var params = {} />
+		
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
 			}
-			
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
+
+
+	<cffunction name="EventsReindex" access="public" displayname="Force a reindex on an event rather than wait for it to happen naturally">
+		<cfargument name="id" required="true" type="string" />
+		
+		<cfset var resource = "/events/reindex" />
+		<cfset var params = {} />
+		
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
+			}
 		</cfscript>
 		
 		<cfreturn doRemoteCall(resource = resource, payload = params) />
 	</cffunction>
 	
 	
-	<cffunction name="VenuesNew" access="public" displayname="Creates an eventful venue">
-		<cfargument name="name" required="true" type="string" default="">
-		<cfargument name="address" required="false" type="string" default="">
-		<cfargument name="city" required="false" type="string" default="">
-		<cfargument name="region" required="false" type="string" default="">
-		<cfargument name="postal_code" required="false" type="string" default="">
-		<cfargument name="country" required="false" type="string" default="">
-		<cfargument name="description" required="false" type="string" default="">
-		<cfargument name="privacy" required="false" type="numeric" default="1" hint="1 = public, 2 = private, 3 = semi-private">
-		<cfargument name="venue_type" required="false" type="string" default="">
-		<cfargument name="url" required="false" type="string" default="">
-		<cfargument name="url_type" required="false" type="string" default="">
-		<cfargument name="parent_id" required="false" type="string" default="">	
+	<cffunction name="EventTagsGet" access="public" displayname="Gets tags for an individual event">
+		<cfargument name="id" required="true" type="string" default="" />
 		
-		<cfset var resource = "/venues/new"  />
+		<cfset var resource = "/events/tags/list" />
 		<cfset var params = {} />
 		
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
+			}
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
+
+
+	<cffunction name="EventTagsNew" access="public" displayname="Adds tags to an individual event">
+		<cfargument name="id" required="true" type="string" default="" />
+		<cfargument name="tags" type="string" required="true" default="" hint="A space-delimited set of tags.  Tags with spaces should be quoted" />
+		
+		<cfset var resource = "/events/tags/list" />
+		<cfset var params = {} />
+		
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
+			}
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
+	
+	
+	<cffunction name="EventPropertiesGet" access="public" displayname="Gets properties of an individual event">
+		<cfargument name="id" required="true" type="string" default="" />
+		
+		<cfset var resource = "/events/properties/list" />
+		<cfset var params = {} />
+		
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
+			}
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
+			
+
+	<cffunction name="EventPropertiesAdd" access="public" displayname="Add properties to an individual event">
+		<cfargument name="id" required="true" type="string" default="" />
+		<cfargument name="name" type="string" required="false" default="" />
+		<cfargument name="value" type="string" required="false" default="" />
+		
+		<cfset var resource = "/events/properties/add" />
+		<cfset var params = {} />
+		
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
+			}
+			if(len(arguments.name)) {
+				structInsert(params, "name", arguments.name);
+			}
+			if(len(arguments.value)) {
+				structInsert(params, "value", arguments.value);
+			}
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
+			
+
+	<cffunction name="EventPropertiesRemove" access="public" displayname="Remove properties of an individual event">
+		<cfargument name="id" required="true" type="string" default="" />
+		<cfargument name="property_id" required="true" type="string" default="" hint="Requires property_id OR name" />
+		<cfargument name="name" required="true" type="string" default="" />
+		
+		<cfset var resource = "/events/properties/remove" />
+		<cfset var params = {} />
+		
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
+			}
+			if(len(arguments.property_id)) {
+				structInsert(params, "property_id", arguments.property_id);
+			}
+			if(len(arguments.name)) {
+				structInsert(params, "name", arguments.name);
+			}
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
+
+	
+	<cffunction name="EventLinksAdd" access="public" displayname="Add links to an individual event">
+		<cfargument name="id" required="true" type="string" default="" />
+		<cfargument name="link" required="true" type="string" default="" />
+		<cfargument name="description" required="true" type="string" default="" />
+		<cfargument name="link_type_id" type="numeric" required="true" default="0" hint="15:Blog, 2:Box Office, 8:Chat, 23:Facebook, 1:Info, 21:Myspace, 3:News, 17:Official Site, 18:Podcast, 4:Review, 5:Sponsor, 6:Tickets, 14:Webcast, 19:Website, 20:Wiki, 16:Other" />
+		
+		<cfset var resource = "/events/links/add" />
+		<cfset var params = {} />
+	
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
+			}
+			if(len(arguments.link)) {
+				structInsert(params, "link", arguments.link);
+			}
+			if(len(arguments.description)) {
+				structInsert(params, "description", arguments.description);
+			}
+			if(len(arguments.link_type_id)) {
+				structInsert(params, "link_type_id", arguments.link_type_id);
+			}
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
+			
+
+	<cffunction name="EventLinksDelete" access="public" displayname="Remove links from an individual event">
+		<cfargument name="id" required="true" type="string" default="" />
+		<cfargument name="link_id" required="true" type="string" default="" />
+		
+		<cfset var resource = "/events/links/delete" />
+		<cfset var params = {} />
+		
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
+			}
+			if(len(arguments.link_id)) {
+				structInsert(params, "link_id", arguments.link_id);
+			}
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
+	
+	
+	
+	
+	
+	<cffunction name="VenuesNew" access="public" displayname="Creates an eventful venue">
+		<cfargument name="name" required="true" type="string" default="" />
+		<cfargument name="address" required="false" type="string" default="" />
+		<cfargument name="city" required="false" type="string" default="" />
+		<cfargument name="region" required="false" type="string" default="" />
+		<cfargument name="postal_code" required="false" type="string" default="" />
+		<cfargument name="country" required="false" type="string" default="" />
+		<cfargument name="description" required="false" type="string" default="" />
+		<cfargument name="privacy" required="false" type="numeric" default="1" hint="1 = public, 2 = private, 3 = semi-private" />
+		<cfargument name="venue_type" required="false" type="string" default="" />
+		<cfargument name="url" required="false" type="string" default="" />
+		<cfargument name="url_type" required="false" type="string" default="" />
+		<cfargument name="parent_id" required="false" type="string" default="" />	
+		
+		<cfset var resource = "/venues/new" />
+		<cfset var params = {} />
 		
 		<cfscript>
 			if(len(arguments.name)) {
@@ -400,7 +570,6 @@
 			if(len(arguments.parent_id)) {
 				structInsert(params, "parent_id", arguments.parent_id);
 			}
-			
 		</cfscript>
 		
 		<cfreturn doRemoteCall(resource = resource, payload = params) />	
@@ -408,23 +577,22 @@
 	
 	
 	<cffunction name="VenuesModify" access="public" displayname="Modify an eventful venue">
-		<cfargument name="id" required="true" type="string" default="">
-		<cfargument name="name" required="false" type="string" default="">
-		<cfargument name="address" required="false" type="string" default="">
-		<cfargument name="city" required="false" type="string" default="">
-		<cfargument name="region" required="false" type="string" default="">
-		<cfargument name="postal_code" required="false" type="string" default="">
-		<cfargument name="country" required="false" type="string" default="">
-		<cfargument name="description" required="false" type="string" default="">
-		<cfargument name="privacy" required="false" type="numeric" default="1" hint="1 = public, 2 = private, 3 = semi-private">
-		<cfargument name="venue_type" required="false" type="string" default="">
-		<cfargument name="url" required="false" type="string" default="">
-		<cfargument name="url_type" required="false" type="string" default="">
-		<cfargument name="parent_id" required="false" type="string" default="">	
+		<cfargument name="id" required="true" type="string" default="" />
+		<cfargument name="name" required="false" type="string" default="" />
+		<cfargument name="address" required="false" type="string" default="" />
+		<cfargument name="city" required="false" type="string" default="" />
+		<cfargument name="region" required="false" type="string" default="" />
+		<cfargument name="postal_code" required="false" type="string" default="" />
+		<cfargument name="country" required="false" type="string" default="" />
+		<cfargument name="description" required="false" type="string" default="" />
+		<cfargument name="privacy" required="false" type="numeric" default="1" hint="1 = public, 2 = private, 3 = semi-private" />
+		<cfargument name="venue_type" required="false" type="string" default="" />
+		<cfargument name="url" required="false" type="string" default="" />
+		<cfargument name="url_type" required="false" type="string" default="" />
+		<cfargument name="parent_id" required="false" type="string" default="" />	
 		
-		<cfset var resource = "/venues/modify"  />
+		<cfset var resource = "/venues/modify" />
 		<cfset var params = {} />
-		
 		
 		<cfscript>
 			if(len(arguments.id)) {
@@ -478,7 +646,6 @@
 			if(len(arguments.parent_id)) {
 				structInsert(params, "parent_id", arguments.parent_id);
 			}
-			
 		</cfscript>
 		
 		<cfreturn doRemoteCall(resource = resource, payload = params) />	
@@ -486,16 +653,15 @@
 	
 	
 	<cffunction name="VenuesGet" access="public" displayname="Gets an eventful venue">
-		<cfargument name="id" required="true" type="string" default="">
+		<cfargument name="id" required="true" type="string" default="" />
 		
-		<cfset var resource = "/venues/get"  />
+		<cfset var resource = "/venues/get" />
 		<cfset var params = {} />
 		
 		<cfscript>
 			if(len(arguments.id)) {
 				structInsert(params, "id", arguments.id);
 			}
-			
 		</cfscript>
 		
 		<cfreturn doRemoteCall(resource = resource, payload = arguments)/>
@@ -503,13 +669,12 @@
 	
 	
 	<cffunction name="VenuesWithdraw" access="public" displayname="Withdraws/Deletes an eventful venue">
-		<cfargument name="id" required="true" type="string" default="">
-		<cfargument name="note" required="false" type="string" default="">
+		<cfargument name="id" required="true" type="string" default="" />
+		<cfargument name="note" required="false" type="string" default="" />
 		
-		<cfset var resource = "/venues/withdraw"  />
+		<cfset var resource = "/venues/withdraw" />
 		<cfset var params = {} />
 
-		
 		<cfscript>
 			if(len(arguments.id)) {
 				structInsert(params, "id", arguments.id);
@@ -518,7 +683,167 @@
 			if(len(arguments.note)) {
 				structInsert(params, "note", arguments.note);
 			}
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
+	
+	
+	<cffunction name="VenuesRestore" access="public" displayname="Restore a withdrawn/deleted venue">
+		<cfargument name="id" required="true" type="string" />
+		
+		<cfset var resource = "/venues/restore" />
+		<cfset var params = {} />
+		
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
+			}
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
+	
+	
+	<cffunction name="VenueTagsGet" access="public" displayname="Gets tags for an individual venue">
+		<cfargument name="id" required="true" type="string" default="" />
+		
+		<cfset var resource = "/venues/tags/list" />
+		<cfset var params = {} />
+		
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
+			}
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
+
+
+	<cffunction name="VenueTagsNew" access="public" displayname="Adds tags to an individual venue">
+		<cfargument name="id" required="true" type="string" default="" />
+		<cfargument name="tags" type="string" required="true" default="" hint="A space-delimited set of tags.  Tags with spaces should be quoted" />
+		
+		<cfset var resource = "/venues/tags/list" />
+		<cfset var params = {} />
+		
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
+			}
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
+	
+	
+	<cffunction name="VenuePropertiesGet" access="public" displayname="Gets properties of an individual venue">
+		<cfargument name="id" required="true" type="string" default="" />
+		
+		<cfset var resource = "/venues/properties/list" />
+		<cfset var params = {} />
+		
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
+			}
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
 			
+
+	<cffunction name="VenuePropertiesAdd" access="public" displayname="Add properties to an individual venue">
+		<cfargument name="id" required="true" type="string" default="" />
+		<cfargument name="name" type="string" required="false" default="" />
+		<cfargument name="value" type="string" required="false" default="" />
+		
+		<cfset var resource = "/venues/properties/add" />
+		<cfset var params = {} />
+		
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
+			}
+			if(len(arguments.name)) {
+				structInsert(params, "name", arguments.name);
+			}
+			if(len(arguments.value)) {
+				structInsert(params, "value", arguments.value);
+			}
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
+			
+
+	<cffunction name="VenuePropertiesRemove" access="public" displayname="Remove properties of an individual venue">
+		<cfargument name="id" required="true" type="string" default="" />
+		<cfargument name="property_id" required="true" type="string" default="" hint="Requires property_id OR name" />
+		<cfargument name="name" required="true" type="string" default="" />
+		
+		<cfset var resource = "/venues/properties/remove" />
+		<cfset var params = {} />
+		
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
+			}
+			if(len(arguments.property_id)) {
+				structInsert(params, "property_id", arguments.property_id);
+			}
+			if(len(arguments.name)) {
+				structInsert(params, "name", arguments.name);
+			}
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
+
+	
+	<cffunction name="VenueLinksAdd" access="public" displayname="Add links to an individual venue">
+		<cfargument name="id" required="true" type="string" default="" />
+		<cfargument name="link" required="true" type="string" default="" />
+		<cfargument name="description" required="true" type="string" default="" />
+		<cfargument name="link_type_id" type="numeric" required="true" default="0" hint="15:Blog, 2:Box Office, 8:Chat, 23:Facebook, 1:Info, 21:Myspace, 3:News, 17:Official Site, 18:Podcast, 4:Review, 5:Sponsor, 6:Tickets, 14:Webcast, 19:Website, 20:Wiki, 16:Other" />
+		
+		<cfset var resource = "/venues/links/add" />
+		<cfset var params = {} />
+	
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
+			}
+			if(len(arguments.link)) {
+				structInsert(params, "link", arguments.link);
+			}
+			if(len(arguments.description)) {
+				structInsert(params, "description", arguments.description);
+			}
+			if(len(arguments.link_type_id)) {
+				structInsert(params, "link_type_id", arguments.link_type_id);
+			}
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
+			
+
+	<cffunction name="VenueLinksDelete" access="public" displayname="Remove links from an individual venue">
+		<cfargument name="id" required="true" type="string" default="" />
+		<cfargument name="link_id" required="true" type="string" default="" />
+		
+		<cfset var resource = "/venues/links/delete" />
+		<cfset var params = {} />
+		
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
+			}
+			if(len(arguments.link_id)) {
+				structInsert(params, "link_id", arguments.link_id);
+			}
 		</cfscript>
 		
 		<cfreturn doRemoteCall(resource = resource, payload = params) />
@@ -526,20 +851,19 @@
 	
 	
 	<cffunction name="VenuesSearch" access="public" displayname="Searches Eventful venues">
-		<cfargument name="keywords" required="false" type="string" default="">
-		<cfargument name="location" required="false" type="string" default="">
-		<cfargument name="within" required="false" type="numeric" default="0">
-		<cfargument name="units" required="false" type="string" default="">
-		<cfargument name="count_only" required="false" type="Boolean" default="False">
-		<cfargument name="sort_order" required="false" type="string" default="venue_name" hint="One of 'popularity', 'relevance', or 'venue_name'. Default is 'relevance'.">
-		<cfargument name="sort_direction" required="false" type="string" default="" hint="ascending or descending">
-		<cfargument name="page_size" required="false" type="numeric" default="0">
-		<cfargument name="page_number" required="false" type="numeric" default="0">
+		<cfargument name="keywords" required="false" type="string" default="" />
+		<cfargument name="location" required="false" type="string" default="" />
+		<cfargument name="within" required="false" type="numeric" default="0" />
+		<cfargument name="units" required="false" type="string" default="" />
+		<cfargument name="count_only" required="false" type="Boolean" default="False" />
+		<cfargument name="sort_order" required="false" type="string" default="venue_name" hint="One of 'popularity', 'relevance', or 'venue_name'. Default is 'relevance'." />
+		<cfargument name="sort_direction" required="false" type="string" default="" hint="ascending or descending" />
+		<cfargument name="page_size" required="false" type="numeric" default="0" />
+		<cfargument name="page_number" required="false" type="numeric" default="0" />
 		
-		<cfset var resource = "/venues/search"  />
+		<cfset var resource = "/venues/search" />
 		<cfset var params = {} />
 
-		
 		<cfscript>
 			if(len(arguments.keywords)) {
 				structInsert(params, "keywords", arguments.keywords);
@@ -576,89 +900,36 @@
 			if(len(arguments.page_number) AND arguments.page_number GT 0) {
 				structInsert(params, "page_number", arguments.page_number);
 			}
-			
 		</cfscript>
 		
 		<cfreturn doRemoteCall(resource = resource, payload = params) />	
 	</cffunction>
-	
-	
-	<cffunction name="cleanString" access="private" hint="Cleans the URL string before its sent to Eventful">
-		<cfargument name="urlString" required="true" type="string">
-		<cfset var retString = "">
+
+
+	<cffunction name="VenuesResolve" access="public" displayname="Searches Eventful venues trying to return a single best match">
+		<cfargument name="location" required="false" type="string" default="" />
 		
+		<cfset var resource = "/venues/resolve" />
+		<cfset var params = {} />
+
 		<cfscript>
-			retString = replace(arguments.urlString, " ", "+", "ALL");
+			if(len(arguments.location)) {
+				structInsert(params, "location", arguments.location);
+			}
 		</cfscript>
 		
-		<cfreturn retString>
+		<cfreturn doRemoteCall(resource = resource, payload = params) />	
+	</cffunction>
+		
+
+	<cffunction name="CategoriesGet" access="public" displayname="Get available categories">
+		<cfreturn doRemoteCall(resource = "/categories/list", payload = {}) />
 	</cffunction>
 
 
-	<cffunction name="doRemoteCall" output="false" access="private" returntype="any">
-		<cfargument name="method" type="any" required="true" default="GET" />
-		<cfargument name="resource" type="any" required="true" />
-		<cfargument name="headers" type="any" required="false" default="#structNew()#" />
-		<cfargument name="payload" type="any" required="false" default="#structNew()#" />
 
-		<cfset local.uri = arguments.resource />
-		<cfset local.key = "" />
-
-		<!--- allow short /resource/style/names to add endpoint but also permit passing in a full URL like for form Submit --->
-		<cfif left(uri, 1) EQ "/">
-			<cfset uri = variables.apiurl & uri />
-		</cfif>
-
-		<cfif isJSON(arguments.payload) AND NOT structKeyExists(arguments.headers, "Content-Type")>
-			<cfset structInsert(arguments.headers, "Content-Type", "application/json") />
-		</cfif>
-		
-		<!--- add in the oauth / authentication fields --->
-		<cfset arguments.payload["app_key"] = variables.app_key />
-		<cfset arguments.payload["oauth_consumer_key"] = variables.consumer_key />
-		<cfset arguments.payload["oauth_token"] = variables.token />
-		<cfset arguments.payload["oauth_nonce"] = generateNonce() />
-		<cfset arguments.payload["oauth_signature_method"] = "HMAC-SHA1" />
-		<cfset arguments.payload["oauth_timestamp"] = generateTimestamp() />
-		<cfset arguments.payload["oauth_version"] = "1.0" />
-
-		<cfset local.signature = generateSignature(variables.consumer_secret, variables.token_secret, arguments.method, uri, arguments.payload) />
-		<cfset uri &= (find("?", uri) ? "&" : "?") & "oauth_signature=#signature#" />
-
-		<cfset local.auth_header = generateAuthorizationHeader(local.signature, arguments.payload) />
-		<cfset structInsert(arguments.headers, "Authorization", local.auth_header) />
-
-		<!--- oauth has special url encoding requirements, so use private variant and tell restconsumer NOT to encode formfields/url params --->
-		<cfloop collection="#arguments.payload#" item="key">	
-			<cfset uri = "#uri#&#lCase(key)#=#URLEncodedFormat_3986(arguments.payload[key])#">
-		</cfloop>
-
-		<cfset local.res = doRestCall(url = uri, method = arguments.method, payload = {}, headers = arguments.headers, encoded = false) />
-		
-		<!--- remove the BOM (byte order mark) from the resulting content, if it exists 
-		was in original eventful.cfc, not sure if necessary now that we're using the json api?
-		<cfif asc(left(res.content, 1)) EQ 65279>
-			<cfset res.content = right(res.content, len(res.content)-1) />
-		</cfif> 
-		--->
-		
-		<cfif res.complete>
-			<cfset res.json = isJSON(res.content) ? deserializeJson(res.content) : "" />
-			<cfset res.success = isJSON(res.content) ? !structKeyExists(res.json, "error") : true />
-			<cfreturn res />
-		<cfelse>
-			<cfdump var="#res#" output="console" />
-			<cfthrow message="Error" detail="The response from #arguments.resource# was not JSON" extendedinfo="#res.content#" />
-		</cfif>
-		
-	</cffunction>
-
-
-	<cffunction name="doRestCall" output="false" access="public" returntype="any" hint="wrapper to facilitate unit testing">
-		<cfreturn variables.rc.process(argumentCollection = arguments, encoded = false) />
-	</cffunction>
-
-
+	<!-- FOR GETTING OAUTH ACCESS AND RESPONSE TOKENS -->	
+	
 	<cffunction name="getOauthRequestToken" output="true" access="public" returntype="any">
 		<cfargument name="callback_url" type="string" required="true" />
 
@@ -744,6 +1015,66 @@
 	</cffunction>
 
 
+
+	<!-- PRIVATE PRIVATE PRIVATE PRIVATE PRIVATE PRIVATE PRIVATE PRIVATE PRIVATE -->
+
+	<cffunction name="doRemoteCall" output="false" access="private" returntype="any">
+		<cfargument name="method" type="any" required="true" default="GET" />
+		<cfargument name="resource" type="any" required="true" />
+		<cfargument name="headers" type="any" required="false" default="#structNew()#" />
+		<cfargument name="payload" type="any" required="false" default="#structNew()#" />
+
+		<cfset local.uri = arguments.resource />
+		<cfset local.key = "" />
+
+		<!--- allow short /resource/style/names to add endpoint but also permit passing in a full URL like for form Submit --->
+		<cfif left(uri, 1) EQ "/">
+			<cfset uri = variables.apiurl & uri />
+		</cfif>
+
+		<cfif isJSON(arguments.payload) AND NOT structKeyExists(arguments.headers, "Content-Type")>
+			<cfset structInsert(arguments.headers, "Content-Type", "application/json") />
+		</cfif>
+		
+		<!--- add in the oauth / authentication fields --->
+		<cfset arguments.payload["app_key"] = variables.app_key />
+		<cfset arguments.payload["oauth_consumer_key"] = variables.consumer_key />
+		<cfset arguments.payload["oauth_token"] = variables.token />
+		<cfset arguments.payload["oauth_nonce"] = generateNonce() />
+		<cfset arguments.payload["oauth_signature_method"] = "HMAC-SHA1" />
+		<cfset arguments.payload["oauth_timestamp"] = generateTimestamp() />
+		<cfset arguments.payload["oauth_version"] = "1.0" />
+
+		<cfset local.signature = generateSignature(variables.consumer_secret, variables.token_secret, arguments.method, uri, arguments.payload) />
+		<cfset uri &= (find("?", uri) ? "&" : "?") & "oauth_signature=#signature#" />
+
+		<cfset local.auth_header = generateAuthorizationHeader(local.signature, arguments.payload) />
+		<cfset structInsert(arguments.headers, "Authorization", local.auth_header) />
+
+		<!--- oauth has special url encoding requirements, so use private variant and tell restconsumer NOT to encode formfields/url params --->
+		<cfloop collection="#arguments.payload#" item="key">	
+			<cfset uri &= "&#lCase(key)#=#URLEncodedFormat_3986(arguments.payload[key])#" />
+		</cfloop>
+
+		<cfset local.res = doRestCall(url = uri, method = arguments.method, payload = {}, headers = arguments.headers, encoded = false) />
+		
+		<cfif res.complete>
+			<cfset res.json = isJSON(res.content) ? deserializeJson(res.content) : "" />
+			<cfset res.success = isJSON(res.content) ? !structKeyExists(res.json, "error") : true />
+			<cfreturn res />
+		<cfelse>
+			<cfdump var="#res#" output="console" />
+			<cfthrow message="Error" detail="The response from #arguments.resource# was not JSON" extendedinfo="#res.content#" />
+		</cfif>
+		
+	</cffunction>
+
+
+	<cffunction name="doRestCall" output="false" access="private" returntype="any" hint="wrapper to facilitate unit testing">
+		<cfreturn variables.rc.process(argumentCollection = arguments, encoded = false) />
+	</cffunction>
+
+
 	<cffunction name="hmac_sha1" returntype="binary" access="private" output="false" hint="NSA SHA-1 Algorithm">
 	   <cfargument name="signKey" type="string" required="true" />
 	   <cfargument name="signMessage" type="string" required="true" />
@@ -762,7 +1093,7 @@
 	</cffunction>
 	
 	
-	<cffunction name="URLEncodedFormat_3986" returntype="string" access="private" output="no">
+	<cffunction name="URLEncodedFormat_3986" returntype="string" access="private" output="false">
 		<cfargument name="url" type="string" required="true" />
 		
 		<cfset local.rfc_3986_bad_chars = "%2D,%2E,%5F,%7E" />
@@ -771,7 +1102,7 @@
 	</cffunction>
 	
 	
-	<cffunction name="OauthBaseString" returntype="string" access="private" output="no">
+	<cffunction name="OauthBaseString" returntype="string" access="private" output="false">
 		<cfargument name="http_method" type="string" required="true" />
 		<cfargument name="base_uri" type="string" required="true" />
 		<cfargument name="parameters" type="struct" required="true" />
@@ -815,13 +1146,13 @@
 	</cffunction>
 
 
-	<cffunction name="generateTimestamp" access="public" returntype="numeric">
+	<cffunction name="generateTimestamp" output="false" access="private" returntype="numeric">
 		<cfset var tc = CreateObject("java", "java.util.Date").getTime() />
 		<cfreturn int(tc / 1000) />
 	</cffunction>
 
 
-	<cffunction name="generateNonce" access="public" returntype="string" output="false" hint="generate nonce value">
+	<cffunction name="generateNonce" output="false" access="private" returntype="string" hint="generate nonce value">
 		<cfset var iMin = 0 />
 		<cfset var iMax = CreateObject("java","java.lang.Integer").MAX_VALUE />
 		<cfset var sToEncode = generateTimestamp() & RandRange(iMin, iMax) />
