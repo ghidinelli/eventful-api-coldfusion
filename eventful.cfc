@@ -86,6 +86,7 @@
 		<cfargument name="sort_direction" required="false" type="string" default="" />
 		<cfargument name="page_size" required="false" type="numeric" default="0" />
 		<cfargument name="page_number" required="false" type="numeric" default="0" />
+		<cfargument name="include" required="false" type="string" default="" hint="Includes child data, options are: price, categories, links" />
 		
 		<cfset var resource = "/events/search" />
 		<cfset var params = {} />
@@ -135,6 +136,9 @@
 				structInsert(params, "page_number", arguments.page_number);
 			}
 			
+			if(len(arguments.include)) {
+				structInsert(params, "include", arguments.include);
+			}
 		</cfscript>
 		
 		<cfreturn doRemoteCall(resource = resource, payload = params)/>	
@@ -377,12 +381,35 @@
 		<cfargument name="id" required="true" type="string" default="" />
 		<cfargument name="tags" type="string" required="true" default="" hint="A space-delimited set of tags.  Tags with spaces should be quoted" />
 		
-		<cfset var resource = "/events/tags/list" />
+		<cfset var resource = "/events/tags/new" />
 		<cfset var params = {} />
 		
 		<cfscript>
 			if(len(arguments.id)) {
 				structInsert(params, "id", arguments.id);
+			}
+			if(len(arguments.tags)) {
+				structInsert(params, "tags", arguments.tags);
+			}
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
+	
+	
+	<cffunction name="EventTagsRemove" access="public" displayname="Adds tags to an individual event">
+		<cfargument name="id" required="true" type="string" default="" />
+		<cfargument name="tags" type="string" required="true" default="" hint="A space-delimited set of tags to remove.  Tags with spaces should be quoted" />
+		
+		<cfset var resource = "/events/tags/remove" />
+		<cfset var params = {} />
+		
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
+			}
+			if(len(arguments.tags)) {
+				structInsert(params, "tags", arguments.tags);
 			}
 		</cfscript>
 		
@@ -453,14 +480,54 @@
 		<cfreturn doRemoteCall(resource = resource, payload = params) />
 	</cffunction>
 
+
+	<cffunction name="EventCategoriesAdd" access="public" displayname="Add categories to an individual event">
+		<cfargument name="id" required="true" type="string" default="" />
+		<cfargument name="category_id" type="string" required="false" default="" />
+		
+		<cfset var resource = "/events/categories/add" />
+		<cfset var params = {} />
+		
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
+			}
+			if(len(arguments.category_id)) {
+				structInsert(params, "category_id", arguments.category_id);
+			}
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
+			
+
+	<cffunction name="EventCategoriesRemove" access="public" displayname="Remove categories from an individual event">
+		<cfargument name="id" required="true" type="string" default="" />
+		<cfargument name="category_id" required="true" type="string" default="" />
+		
+		<cfset var resource = "/events/categories/remove" />
+		<cfset var params = {} />
+		
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
+			}
+			if(len(arguments.category_id)) {
+				structInsert(params, "category_id", arguments.category_id);
+			}
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
 	
-	<cffunction name="EventLinksAdd" access="public" displayname="Add links to an individual event">
+
+	<cffunction name="EventLinksNew" access="public" displayname="Add links to an individual event">
 		<cfargument name="id" required="true" type="string" default="" />
 		<cfargument name="link" required="true" type="string" default="" />
 		<cfargument name="description" required="true" type="string" default="" />
 		<cfargument name="link_type_id" type="numeric" required="true" default="0" hint="15:Blog, 2:Box Office, 8:Chat, 23:Facebook, 1:Info, 21:Myspace, 3:News, 17:Official Site, 18:Podcast, 4:Review, 5:Sponsor, 6:Tickets, 14:Webcast, 19:Website, 20:Wiki, 16:Other" />
 		
-		<cfset var resource = "/events/links/add" />
+		<cfset var resource = "/events/links/new" />
 		<cfset var params = {} />
 	
 		<cfscript>
@@ -501,7 +568,27 @@
 		<cfreturn doRemoteCall(resource = resource, payload = params) />
 	</cffunction>
 	
+
+	<cffunction name="EventImagesAdd" access="public" displayname="Add an image already uploaded">
+		<cfargument name="id" required="true" type="string" default="" />
+		<cfargument name="image_id" required="true" type="string" default="" />
+		
+		<cfset var resource = "/events/images/add" />
+		<cfset var params = {} />
 	
+		<cfscript>
+			if(len(arguments.id)) {
+				structInsert(params, "id", arguments.id);
+			}
+			if(len(arguments.image_id)) {
+				structInsert(params, "image_id", arguments.image_id);
+			}
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
+	</cffunction>
+
+
 	
 	
 	
@@ -725,12 +812,15 @@
 		<cfargument name="id" required="true" type="string" default="" />
 		<cfargument name="tags" type="string" required="true" default="" hint="A space-delimited set of tags.  Tags with spaces should be quoted" />
 		
-		<cfset var resource = "/venues/tags/list" />
+		<cfset var resource = "/venues/tags/new" />
 		<cfset var params = {} />
 		
 		<cfscript>
 			if(len(arguments.id)) {
 				structInsert(params, "id", arguments.id);
+			}
+			if(len(arguments.tags)) {
+				structInsert(params, "tags", arguments.tags);
 			}
 		</cfscript>
 		
@@ -802,13 +892,13 @@
 	</cffunction>
 
 	
-	<cffunction name="VenueLinksAdd" access="public" displayname="Add links to an individual venue">
+	<cffunction name="VenueLinksNew" access="public" displayname="Add links to an individual venue">
 		<cfargument name="id" required="true" type="string" default="" />
 		<cfargument name="link" required="true" type="string" default="" />
 		<cfargument name="description" required="true" type="string" default="" />
 		<cfargument name="link_type_id" type="numeric" required="true" default="0" hint="15:Blog, 2:Box Office, 8:Chat, 23:Facebook, 1:Info, 21:Myspace, 3:News, 17:Official Site, 18:Podcast, 4:Review, 5:Sponsor, 6:Tickets, 14:Webcast, 19:Website, 20:Wiki, 16:Other" />
 		
-		<cfset var resource = "/venues/links/add" />
+		<cfset var resource = "/venues/links/new" />
 		<cfset var params = {} />
 	
 		<cfscript>
@@ -924,6 +1014,26 @@
 
 	<cffunction name="CategoriesGet" access="public" displayname="Get available categories">
 		<cfreturn doRemoteCall(resource = "/categories/list", payload = {}) />
+	</cffunction>
+
+
+	<cffunction name="ImageNew" access="public" displayname="Add an image via a URL">
+		<cfargument name="image_url" required="true" type="string" default="" />
+		<cfargument name="caption" required="true" type="string" default="" />
+		
+		<cfset var resource = "/images/new" />
+		<cfset var params = {} />
+	
+		<cfscript>
+			if(len(arguments.image_url)) {
+				structInsert(params, "image_url", arguments.image_url);
+			}
+			if(len(arguments.caption)) {
+				structInsert(params, "caption", arguments.caption);
+			}
+		</cfscript>
+		
+		<cfreturn doRemoteCall(resource = resource, payload = params) />
 	</cffunction>
 
 
