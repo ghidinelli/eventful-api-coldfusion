@@ -69,6 +69,19 @@
 	</cffunction>
 
 
+	<cffunction name="testGetUserVenues">
+		
+		<cfset makePublic(svc, "doRemoteCall") />
+		<cfset offlineInjector(svc, this, "mock_returnThunderhillWestVenue", "doRestCall") />
+		<cfset local.res = svc.doRemoteCall(method = "GET", resource = "/users/venues/list", payload = {}) />
+
+		<cfset debug(local.res) />
+		<cfset assertTrue(local.res.complete, "Request did not succeed") />
+		<cfset assertTrue(isJson(local.res.content), "Result was not JSON") />
+		<cfset assertTrue(NOT structKeyExists(local.res.json, "error"), "There was an unexpected error") />
+	</cffunction>
+
+
 	<cffunction name="testGetOauthRequestToken" output="false" access="public" returntype="any">
 	
 		<cfset offlineInjector(svc, this, "mock_requestToken", "doRestCall") />
@@ -217,6 +230,39 @@
 	</cffunction>
 
 
+	<cffunction name="testSearchEventsByLatLong">
+		<cfset offlineInjector(svc, this, "mock_returnEventSearch", "doRestCall") />
+		<cfset local.res = svc.EventsSearch(keywords = "", location = "36.571, -121.762", within = 2) />
+		<cfset debug(local.res) />
+		<cfset assertTrue(local.res.complete, "Request did not succeed") />
+		<cfset assertTrue(isJson(local.res.content), "Result was not JSON") />
+		<cfset assertTrue(NOT structKeyExists(local.res.json, "error"), "There was an unexpected error") />
+		<cfset assertTrue(isStruct(local.res.json.events) OR (isArray(local.res.json.events) AND arrayLen(local.res.json.events) GT 0), "There should be at least one event at MRLS in Monterey, CA but found: #local.res.json.total_items#") />
+	</cffunction>
+
+
+	<cffunction name="testSearchEventsFindSingle">
+		<cfset offlineInjector(svc, this, "mock_returnEventSearch", "doRestCall") />
+		<cfset local.res = svc.EventsSearch(keywords = "outside lands", location = "37.771,-122.480", within = 3, category = "music", units = "mi", date = "2014080800-2014081000", include="price,categories,links") />
+		<cfset debug(local.res) />
+		<cfset assertTrue(local.res.complete, "Request did not succeed") />
+		<cfset assertTrue(isJson(local.res.content), "Result was not JSON") />
+		<cfset assertTrue(NOT structKeyExists(local.res.json, "error"), "There was an unexpected error") />
+		<cfset assertTrue(isStruct(local.res.json.events) OR (isArray(local.res.json.events) AND arrayLen(local.res.json.events) GT 0), "There should be at least one event at MRLS in Monterey, CA but found: #local.res.json.total_items#") />
+	</cffunction>
+	
+	<cffunction name="testSearchEventsFindSingleWithOwner">
+		<cfset offlineInjector(svc, this, "mock_returnEventSearch", "doRestCall") />
+		<cfset local.res = svc.EventsSearch(keywords = "owner_id:21876692", location = "36.571, -121.762", within = 3, units = "mi", include="price,categories,links") />
+		<cfset debug(local.res) />
+		<cfset assertTrue(local.res.complete, "Request did not succeed") />
+		<cfset assertTrue(isJson(local.res.content), "Result was not JSON") />
+		<cfset assertTrue(NOT structKeyExists(local.res.json, "error"), "There was an unexpected error") />
+		<cfset assertTrue(structKeyExists(local.res.json, "events"), "There were no events returned by the search") />
+		<cfset assertTrue(isStruct(local.res.json.events) OR (isArray(local.res.json.events) AND arrayLen(local.res.json.events) GT 0), "There should be at least one event at MRLS in Monterey, CA but found: #local.res.json.total_items#") />
+	</cffunction>	
+
+
 	<cffunction name="testSearchVenues">
 		<cfset offlineInjector(svc, this, "mock_returnVenueSearch", "doRestCall") />
 		<cfset local.res = svc.VenuesSearch(keywords = "mazda raceway laguna seca", location = "monterey, ca, us") />
@@ -225,6 +271,28 @@
 		<cfset assertTrue(isJson(local.res.content), "Result was not JSON") />
 		<cfset assertTrue(NOT structKeyExists(local.res.json, "error"), "There was an unexpected error") />
 		<cfset assertTrue(isStruct(local.res.json.venues) OR (isArray(local.res.json.venues) AND arrayLen(local.res.json.venues) EQ 1), "There should be one MRLS in Monterey, CA but found: #local.res.json.total_items#") />
+	</cffunction>
+
+
+	<cffunction name="testResolveVenuesNoMatch">
+		<cfset offlineInjector(svc, this, "mock_returnVenueResolveNoMatch", "doRestCall") />
+		<cfset local.res = svc.VenuesResolve(location = "mazda raceway laguna seca, monterey, ca") />
+		<cfset debug(local.res) />
+		<cfset assertTrue(local.res.complete, "Request did not succeed") />
+		<cfset assertTrue(isJson(local.res.content), "Result was not JSON") />
+		<cfset assertTrue(NOT structKeyExists(local.res.json, "error"), "There was an unexpected error") />
+		<cfset assertTrue(structKeyExists(local.res.json, "status") AND local.res.json.status EQ "failed", "There is no match for Mazda Racweay Laguna Seca but found one: #local.res.content#") />
+	</cffunction>
+
+
+	<cffunction name="testResolveVenuesOneMatch">
+		<cfset offlineInjector(svc, this, "mock_returnVenueResolveOneMatch", "doRestCall") />
+		<cfset local.res = svc.VenuesResolve(location = "laguna seca") />
+		<cfset debug(local.res) />
+		<cfset assertTrue(local.res.complete, "Request did not succeed") />
+		<cfset assertTrue(isJson(local.res.content), "Result was not JSON") />
+		<cfset assertTrue(NOT structKeyExists(local.res.json, "error"), "There was an unexpected error") />
+		<cfset assertTrue(structKeyExists(local.res.json, "status") AND local.res.json.status EQ "ok", "There should be one Laguna Seca in Mexico but failed: #local.res.content#") />
 	</cffunction>
 
 
@@ -333,6 +401,17 @@
 	<cffunction name="mock_returnVenueGet" output="false" access="private" returntype="any">
 		<cfreturn { status = '200', Complete = true, Content = '{"withdrawn":null,"children":null,"comments":null,"region_abbr":"CA","postal_code":null,"latitude":"39.5244","url":"http://eventful.com/willows/venues/thunderhill-raceway-west-/V0-001-008119466-2?utm_source=apis&utm_medium=apim&utm_campaign=apic","id":"V0-001-008119466-2","address":null,"metro":null,"links":{"link":{"time":"2014-06-24 13:38:22","user_reputation":null,"url":"http://www.thunderhill.com","id":"33199259","type":"Website","description":"Official Thunderhill Website","username":"motorsportreg"}},"images":null,"withdrawn_note":null,"longitude":"-122.192","country_abbr":"USA","name":"Thunderhill Raceway West","region":"California","description":null,"properties":{"property":{"value":"1.9miles","name":"length","id":"89607"}},"modified":"2014-06-23 21:14:34","venue_display":"1","parents":null,"geocode_type":"City Based GeoCodes","tz_olson_path":null,"city":"Willows","trackbacks":null,"country":"United States","owner":"motorsportreg","country_abbr2":"US","tags":null,"venue_type":"37","created":"2014-06-23 21:14:34","events":null}' } />
 	</cffunction> 	
+
+	<cffunction name="mock_returnVenueResolveNoMatch" output="false" access="private" returntype="any">
+		<cfreturn { status = '200', Complete = true, Content = '{"country_name":null,"location":null,"country_abbr":null,"original":"mazda raceway laguna seca, monterey, ca","country_abbr2":null,"region_name":null,"status":"failed","region_abbr":null,"venue_id":null,"where_used":null,"venue_name":null,"address":null,"venues":null,"city_name":null}' } />
+	</cffunction> 	
+
+	<cffunction name="mock_returnVenueResolveOneMatch" output="false" access="private" returntype="any">
+		<cfreturn { status = '200', Complete = true, Content = '{"country_name":"Mexico","location":"Laguna Seca, Mexico","country_abbr":"MEX","original":"laguna seca","country_abbr2":"MX","region_name":"Puebla","status":"ok","region_abbr":"PUE","venue_id":"V0-001-008130972-3","where_used":null,"venue_name":"TBD","address":null,"venues":null,"city_name":"Laguna Seca"}' } />
+	</cffunction> 	
+	
+	 
+	
  	
 	
 	<!--- this mock is from restconsumer.process(), not cfhttp --->
@@ -350,10 +429,3 @@
 	</cffunction>
 	
 </cfcomponent>
-
-
-
-
-
-
-
